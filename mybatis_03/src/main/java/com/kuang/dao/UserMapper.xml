@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--        namespace=绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="com.kuang.dao.UserMapper">
+
+
+<!--    结果集映射-->
+    <resultMap id="UserMap" type="user">
+        <id property="user_id" column="id"/>
+<!--        column数据库中的字段，property 实体类中的属性-->
+<!--        <result column="id" property="id" />-->
+<!--        <result column="name" property="name" />-->
+        <result column="pwd" property="password" />
+    </resultMap>
+
+
+
+<!--    查询-->
+    <select id="getUserList" resultType="user">
+        select * from users
+    </select>
+
+    <select id="getUserById" resultMap="UserMap">
+        select * from users where id = #{id}
+    </select>
+
+
+    <insert id="addUser" parameterType="com.kuang.pojo.User" >
+        insert into users (id, name, pwd) values (#{id}, #{name}, #{pwd} )
+    </insert>
+
+
+    <update id="updateUser" parameterType="com.kuang.pojo.User">
+        update users set name=#{name},pwd=#{pwd} where id=#{id} ;
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from users where id=#{id};
+    </delete>
+</mapper>
